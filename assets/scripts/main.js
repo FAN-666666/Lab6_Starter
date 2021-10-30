@@ -5,7 +5,10 @@
 const recipes = [
   'https://introweb.tech/assets/json/ghostCookies.json',
   'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  'https://introweb.tech/assets/json/chocolateChip.json',
+  'assets/recipes/octopus.json',
+  'assets/recipes/shrimp.json',
+  'assets/recipes/chicken.json'
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
@@ -42,7 +45,18 @@ async function fetchRecipes() {
     // For part 2 - note that you can fetch local files as well, so store any JSON files you'd like to fetch
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
-    // Part 1 Expose - TODO
+    for(let i=0;i<recipes.length;i++){
+      fetch(recipes[i])
+      .then(response => response.json())
+      .then(data => {
+        recipeData[i] = data;
+        if (Object.keys(recipeData).length == recipes.length){
+          resolve(true);
+        }
+      })
+      .catch(error => reject(false));
+    }
+    
   });
 }
 
@@ -54,6 +68,11 @@ function createRecipeCards() {
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
+  for (let i=0;i<3;i++) {
+    var el = document.createElement("recipe-card");
+    el.data = recipeData[i];
+    document.querySelector('main').appendChild(el);
+  }
 }
 
 function bindShowMore() {
@@ -65,4 +84,25 @@ function bindShowMore() {
   // in the recipeData object where you stored them/
 
   // Part 2 Explore - TODO
+  var buttonType = document.querySelector('#button-wrapper button');
+  var flag = true;
+  console.log(recipeData);
+  buttonType.addEventListener('click',function(){
+    if(flag){
+      for (let i=3;i<Object.keys(recipeData).length;i++) {
+        var el = document.createElement("recipe-card");
+        el.data = recipeData[i];
+        document.querySelector('main').appendChild(el);
+      }
+      buttonType.innerText="Show less";
+      flag = false;
+    }else{
+      for(let i=3;i<=recipes.length;i++){
+        document.querySelectorAll('recipe-card')[i].hidden=true;
+      }
+      buttonType.innerText="Show more";
+      flag = true;
+    }
+    
+  });
 }
