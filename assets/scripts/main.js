@@ -91,9 +91,6 @@ function bindShowMore() {
   var flag = true;
   var initalize = true;
   buttonType.addEventListener('click',function(){
-    
-    console.log(flag);
-    console.log(initalize);
     if(initalize){
       for (let i=3;i<recipes.length;i++) {
         var el = document.createElement("recipe-card");
@@ -116,10 +113,7 @@ function bindShowMore() {
       flag = true;
       for(let i=3;i<=recipes.length;i++){
         document.querySelectorAll('recipe-card')[i].hidden=true;
-      }
-      
-      
+      } 
     }
-    
   });
 }
