@@ -103,7 +103,6 @@ function bindShowMore() {
     }
     else if(flag){
       for(let i=3;i<recipes.length;i++){
-        console.log(document.querySelectorAll('recipe-card')[i]);
         document.querySelectorAll('recipe-card')[i].hidden=false;
       }
       buttonType.innerText="Show less";
